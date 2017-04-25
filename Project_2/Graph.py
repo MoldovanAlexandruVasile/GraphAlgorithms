@@ -1,3 +1,5 @@
+import sys
+
 class DictGraph:
     """
     An undirected graph, represented as a map from each vertex to
@@ -39,24 +41,24 @@ class DictGraph:
         self._dict[y].append(x)
 
     def addVertex(self,x):
-        '''
+        """
         Adds a new vertex to the graph
         :param x: The vertex we want to add
-        '''
+        """
         self._dict[x] = []
 
     def isVertex(self,x):
-        '''
+        """
         Checks if the vertex does exists
         :param x: the vertex we check for
-        '''
+        """
         return x in self._dict.keys()
 
     def removeVertex(self, x, m_edges):
-        '''
+        """
         :param x: The vertex
         :return: the graph without that vertex
-        '''
+        """
         ok = True
         while ok == True:
             ok = False
@@ -69,26 +71,40 @@ class DictGraph:
         return int(m_edges)
 
     def removeEdge(self, x, y):
-        '''
+        """
         :param x: Edge from
         :param y: Edge to
         :return: The graph without the edge
-        '''
+        """
 
         self._dict[x].remove(y)
         self._dict[y].remove(x)
 
     def DFSRec(self, v, visited):
-        '''Mark the current node as visited and print it'''
+        """
+        Mark the current node as visited and print it
+        """
         visited[v] = True
-        print("\t\t",v)
         '''Recur for all the vertices adjacent to this vertex'''
-        for i in self._dict[v]:
-            if visited[i] == False:
-                self.DFSRec(i, visited)
+        if len(self._dict[v]) == 0:
+            print("\t\t", v)
+        else:
+            for i in self._dict[v]:
+                print("\t\t",v, "-", i)
+                if visited[i] == False:
+                    self.DFSRec(i, visited)
 
-    def DFS(self, v):
-        '''Mark all the vertices as not visited'''
+    def DFS(self):
+        """
+        Mark all the vertices as not visited
+        Call the recursive helper function to print DFS traversal
+        """
+        sys.setrecursionlimit(10000)
+        nr = int(0)
         visited = [False] * (len(self._dict))
-        '''Call the recursive helper function to print DFS traversal'''
-        self.DFSRec(v, visited)
+        for i in self.parseX():
+            if visited[i] == False:
+                nr = nr + 1
+                print("\n A connected component is: ")
+                self.DFSRec(i, visited)
+        return nr

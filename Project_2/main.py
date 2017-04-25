@@ -171,11 +171,7 @@ def run():
                     else: print("\n     Invalid data !")
                 else: print("\n     Invalid data !")
             elif command == 10:
-                vertex = input("\n     Vertex you want to start: ")
-                if validInteger(vertex):
-                    if g.isVertex(int(vertex)):
-                        print(" ")
-                        g.DFS(int(vertex))
-                    else: print("\n     Invalid vertex ! \n")
-                else: print("\n     Invalid data !\n")
+                    print("\n\n The number of connected components: ", g.DFS())
+            else: print("\n Invalid command !")
+
 run()
